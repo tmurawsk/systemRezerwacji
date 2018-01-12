@@ -38,12 +38,12 @@ public class ListaSal {
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
 	 */
-	public static boolean czyIstnieje(int numer) {
+	public static Sala znajdzSale(int numer) {
 		// begin-user-code
 		for (Sala s : listaSal)
 			if (s.getNumer() == numer)
-				return true;
-		return false;
+				return s;
+		return null;
 		// end-user-code
 	}
 }

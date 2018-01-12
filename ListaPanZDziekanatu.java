@@ -39,12 +39,12 @@ public class ListaPanZDziekanatu {
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
 	 */
-	public static boolean czyIstnieje(int id) {
+	public static PaniZDziekanatu znajdzPaniaZDziekanatu(int id) {
 		// begin-user-code
 		for (PaniZDziekanatu pzd : listaPanZDziekanatu)
 			if (id == pzd.getIdentyfikator())
-				return true;
-		return false;
+				return pzd;
+		return null;
 		// end-user-code
 	}
 }

@@ -65,10 +65,20 @@ public class ListaRezerwacji {
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
 	 */
-	public static void stworzRezerwacje(Wykladowca wykladowca, int sala, int godzinaS, int godzinaK, int dzien, int miesiac, int rok, int status) {
+	public static void stworzRezerwacje(Wykladowca wykladowca, Sala sala, int godzinaS, int godzinaK, int dzien, int miesiac, int rok, int status) {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		Rezerwacja rez = new Rezerwacja();
+		rez.setNumer(genNr++);
+		rez.setWykladowca(wykladowca);
+		rez.setDzien(dzien);
+		rez.setMiesiac(miesiac);
+		rez.setRok(rok);
+		rez.setGodzinaStart(godzinaS);
+		rez.setGodzinaKoniec(godzinaK);
+		rez.setStatus(status);
+		rez.setSala(sala);
+		
+		listaRezerwacji.add(rez);
 		// end-user-code
 	}
 
@@ -76,48 +86,49 @@ public class ListaRezerwacji {
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
 	 */
-	public static void pokazRezerwacje() {
+	public static void pokazRezerwacje(Wykladowca wykladowca) {
 		// begin-user-code
-		for(Rezerwacja r : listaRezerwacji)
+		System.out.println("Numer\tSala\tWykladowca\t\tStart\tKoniec\tStatus\tData");
+		for(Rezerwacja r : listaRezerwacji){
+			if(wykladowca == null)
 			System.out.println(r.getNumer() + " " + r.getSala() + " " + r.getWykladowca().getImie() +
 					" " + r.getWykladowca().getNazwisko() + " " + r.getGodzinaStart() + "-" + r.getGodzinaKoniec() + 
 					" " + r.getStatus() + " " + r.getDzien() + "." + r.getMiesiac() + "." + r.getRok());
+			else if(r.getWykladowca().equals(r.getWykladowca()))
+				System.out.println(r.getNumer() + " " + r.getSala() + " " + r.getWykladowca().getImie() +
+						" " + r.getWykladowca().getNazwisko() + " " + r.getGodzinaStart() + "-" + r.getGodzinaKoniec() + 
+						" " + r.getStatus() + " " + r.getDzien() + "." + r.getMiesiac() + "." + r.getRok());	
+		}
 		// end-user-code
 	}
 
 	/** 
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
-	 * @generated "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public static void anulujRezerwacje() {
+	public static void anulujRezerwacje(int numer) {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		listaRezerwacji.remove(znajdzRezerwacje(numer));
 		// end-user-code
 	}
 
 	/** 
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
-	 * @generated "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public static void zatwierdzRezerwacje() {
+	public static void zatwierdzRezerwacje(int numer) {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		znajdzRezerwacje(numer).setStatus(1);
 		// end-user-code
 	}
 
 	/** 
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
-	 * @generated "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public static void archiwizujRezerwacje() {
+	public static void archiwizujRezerwacje(int numer) {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		znajdzRezerwacje(numer).setStatus(-1);
 		// end-user-code
 	}
 
@@ -125,12 +136,25 @@ public class ListaRezerwacji {
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
 	 */
-	public static boolean sprawdzDostepnosc(int sala, int godzinaS, int godzinaK, int dzien, int miesiac, int rok) {
+	public static boolean sprawdzDostepnosc(Sala sala, int godzinaS, int godzinaK, int dzien, int miesiac, int rok) {
 		// begin-user-code
 		for(Rezerwacja r : listaRezerwacji)
-			if(r.getSala().getNumer() == sala && r.getDzien() == dzien && r.getMiesiac() == miesiac && r.getRok() == rok && (r.getGodzinaStart() < godzinaK || r.getGodzinaKoniec() > godzinaS))
+			if(r.getSala().getNumer() == sala.getNumer() && r.getDzien() == dzien && r.getMiesiac() == miesiac && r.getRok() == rok && (r.getGodzinaStart() < godzinaK || r.getGodzinaKoniec() > godzinaS))
 				return false;
 		return true;
+		// end-user-code
+	}
+	
+	/** 
+	 * <!-- begin-UML-doc -->
+	 * <!-- end-UML-doc -->
+	 */
+	public static Rezerwacja znajdzRezerwacje(int numer) {
+		// begin-user-code
+		for(Rezerwacja r : listaRezerwacji)
+			if(r.getNumer() == numer)
+				return r;
+		return null;
 		// end-user-code
 	}
 }

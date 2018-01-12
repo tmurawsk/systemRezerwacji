@@ -39,13 +39,13 @@ public class ListaWykladowcow {
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
 	 */
-	public static boolean czyIstnieje(int id, String nazwisko, String imie) {
+	public static Wykladowca znajdzWykladowce(int id, String nazwisko, String imie) {
 		// begin-user-code
 		for (Wykladowca w : listaWykladowcow)
 			if (w.getIdentyfikator() == id && w.getImie() == imie
 					&& w.getNazwisko() == nazwisko)
-				return true;
-		return false;
+				return w;
+		return null;
 
 		// end-user-code
 	}

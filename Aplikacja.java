@@ -49,13 +49,18 @@ public class Aplikacja {
 		Scanner in = new Scanner(System.in);
 		while (true) {
 			System.out.println("Podaj numer sali:");
-			int sala = in.nextInt();
-			while (!ListaSal.czyIstnieje(sala)) {
+			int numerSali = in.nextInt();
+			Sala sala = ListaSal.znajdzSale(numerSali);
+			while (sala == null) {
 				System.out
 						.println("Nie ma takiej sali. Wprowadz numer jeszcze raz lub (-1) by wyjsc:");
-				sala = in.nextInt();
-				if (sala == -1)
+				numerSali = in.nextInt();
+				if (numerSali == -1)
+				{
+					in.close();
 					return;
+				}
+				sala = ListaSal.znajdzSale(numerSali);
 			}
 
 			System.out.println("Podaj dzien, miesiac i rok (DD MM RRRR):");
@@ -68,13 +73,22 @@ public class Aplikacja {
 						.println("Zly format daty. Podaj jeszcze raz lub (-1) by wyjsc:");
 				dzien = in.nextInt();
 				if (dzien == -1)
+				{
+					in.close();
 					return;
+				}
 				miesiac = in.nextInt();
 				if (miesiac == -1)
+				{
+					in.close();
 					return;
+				}
 				rok = in.nextInt();
 				if (rok == -1)
+				{
+					in.close();
 					return;
+				}
 			}
 
 			System.out.println("Podaj godzine rozpoczecia rezerwacji (5-22):");
@@ -84,7 +98,10 @@ public class Aplikacja {
 						.println("Niepoprawna godzina. Podaj jeszcze raz lub (-1) by wyjsc:");
 				godzinaS = in.nextInt();
 				if (godzinaS == -1)
+				{
+					in.close();
 					return;
+				}
 			}
 
 			System.out.println("Podaj godzine zakonczenia rezerwacji (5-22):");
@@ -94,7 +111,10 @@ public class Aplikacja {
 						.println("Niepoprawna godzina. Podaj jeszcze raz lub (-1) by wyjsc:");
 				godzinaK = in.nextInt();
 				if (godzinaK == -1)
+				{
+					in.close();
 					return;
+				}
 			}
 
 			if (!ListaRezerwacji.sprawdzDostepnosc(sala, godzinaS, godzinaK,
@@ -103,7 +123,7 @@ public class Aplikacja {
 						.println("Podana sala jest w danym terminie zarezerwowana. Prosimy wpisac inne dane.");
 			else {
 				ListaRezerwacji.stworzRezerwacje(wykladowca, sala, godzinaS,
-						godzinaK, dzien, miesiac, rok, 0);
+						godzinaK, dzien, miesiac, rok, uzytkownik.getUprawnienia());
 				System.out.println("Utworzono rezerwacje");
 				break;
 			}
@@ -115,74 +135,126 @@ public class Aplikacja {
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 */
-	public void pokazRezerwacje() {
+	public void pokazRezerwacje(Wykladowca wykladowca) {
 		// begin-user-code
-		ListaRezerwacji.pokazRezerwacje();
+		ListaRezerwacji.pokazRezerwacje(wykladowca);
 		// end-user-code
 	}
 
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void anulujRezerwacje() {
+	public void anulujRezerwacje(Wykladowca wykladowca) {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		ListaRezerwacji.pokazRezerwacje(wykladowca);
+		System.out.println("Prosze wpisac numer rezerwacji do anulowania:");
+		Scanner in = new Scanner(System.in);
+		int numer = in.nextInt();
+		Rezerwacja rez = ListaRezerwacji.znajdzRezerwacje(numer);
+		
+		while(rez == null){
+			System.out.println("Bledny numer rezerwacji. Wpisz jeszcze raz lub (-1) by wyjsc:");
+			numer = in.nextInt();
+			if(numer == -1){
+				in.close();
+				return;
+			}
+			rez = ListaRezerwacji.znajdzRezerwacje(numer);
+		}
+		ListaRezerwacji.anulujRezerwacje(numer);
+		
+		in.close();
 		// end-user-code
 	}
 
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void zatwierdzRezerwacje() {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		ListaRezerwacji.pokazRezerwacje(null);
+		System.out.println("Prosze wpisac numer rezerwacji do zatwierdzenia:");
+		Scanner in = new Scanner(System.in);
+		int numer = in.nextInt();
+		Rezerwacja rez = ListaRezerwacji.znajdzRezerwacje(numer);
+		
+		while(rez == null){
+			System.out.println("Bledny numer rezerwacji. Wpisz jeszcze raz lub (-1) by wyjsc:");
+			numer = in.nextInt();
+			if(numer == -1){
+				in.close();
+				return;
+			}
+			rez = ListaRezerwacji.znajdzRezerwacje(numer);
+		}
+		ListaRezerwacji.zatwierdzRezerwacje(numer);
+		System.out.println("Rezerwacja numer " + numer + " zostala zatwierdzona.");
+		
+		in.close();
 		// end-user-code
 	}
 
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void zlozUwage() {
+	public void zlozUwage(Wykladowca wykladowca) {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		Scanner in = new Scanner(System.in);
+		System.out.println("Podaj numer sali, ktorej dotyczy uwaga:");
+		int numer = in.nextInt();
+		Sala sala = ListaSal.znajdzSale(numer);
+		
+		while(sala == null){
+			System.out.println("Niepoprawny numer sali. Wprowadz jeszcze raz lub (-1) by wyjsc");
+			numer = in.nextInt();
+			if(numer == -1){
+				in.close();
+				return;
+			}
+			sala = ListaSal.znajdzSale(numer);
+		}
+		in.close();
 		// end-user-code
 	}
 
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
-	public void pokazUwagi() {
+	public void pokazUwagi(Sala sala) {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		ListaUwag.pokazUwagi(sala);
 		// end-user-code
 	}
 
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
-	 * @generated 
-	 *            "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
 	 */
 	public void zatwierdzUwage() {
 		// begin-user-code
-		// TODO Auto-generated method stub
-
+		ListaUwag.pokazUwagi(null);
+		System.out.println("Prosze wpisac numer uwagi do zatwierdzenia:");
+		Scanner in = new Scanner(System.in);
+		int numer = in.nextInt();
+		Uwaga u = ListaUwag.znajdzUwage(numer);
+		
+		while(u == null){
+			System.out.println("Bledny numer uwagi. Wpisz jeszcze raz lub (-1) by wyjsc:");
+			numer = in.nextInt();
+			if(numer == -1){
+				in.close();
+				return;
+			}
+			u = ListaUwag.znajdzUwage(numer);
+		}
+		ListaUwag.zatwierdzUwage(numer);
+		System.out.println("Uwaga numer " + numer + " zostala zatwierdzona.");
+		
+		in.close();
 		// end-user-code
 	}
 
