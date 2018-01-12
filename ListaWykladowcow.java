@@ -42,6 +42,7 @@ public class ListaWykladowcow {
 	 * @param filename
 	 */
 	public ListaWykladowcow(String filename){
+		listaWykladowcow = new LinkedList<Wykladowca>();
 		try {
 			Scanner in = new Scanner(new FileReader(filename));
 			while(in.hasNext()){
@@ -50,10 +51,10 @@ public class ListaWykladowcow {
 				w.setUprawnienia(0);
 				String s = in.nextLine();
 				String imie = "", nazwisko = "";
-				imie += s.charAt(0);
+				imie += s.charAt(1);
 				boolean czyNazwisko = false;
 				
-				for(int i = 1; i < s.length(); i++){
+				for(int i = 2; i < s.length(); i++){
 					if(s.charAt(i) < 'Z')
 						czyNazwisko = true;
 					if(czyNazwisko)

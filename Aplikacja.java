@@ -44,10 +44,9 @@ public class Aplikacja {
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 */
-	public void zlozRezerwacje(Wykladowca wykladowca) {
+	public void zlozRezerwacje(Wykladowca wykladowca, Scanner in) {
 		// begin-user-code
 		System.out.println("Skladanie rezerwacji");
-		Scanner in = new Scanner(System.in);
 		while (true) {
 			System.out.println("Podaj numer sali:");
 			int numerSali = in.nextInt();
@@ -56,10 +55,8 @@ public class Aplikacja {
 				System.out
 						.println("Nie ma takiej sali. Wprowadz numer jeszcze raz lub (-1) by wyjsc:");
 				numerSali = in.nextInt();
-				if (numerSali == -1) {
-					in.close();
+				if (numerSali == -1)
 					return;
-				}
 				sala = ListaSal.znajdzSale(numerSali);
 			}
 
@@ -72,20 +69,14 @@ public class Aplikacja {
 				System.out
 						.println("Zly format daty. Podaj jeszcze raz lub (-1) by wyjsc:");
 				dzien = in.nextInt();
-				if (dzien == -1) {
-					in.close();
+				if (dzien == -1)
 					return;
-				}
 				miesiac = in.nextInt();
-				if (miesiac == -1) {
-					in.close();
+				if (miesiac == -1)
 					return;
-				}
 				rok = in.nextInt();
-				if (rok == -1) {
-					in.close();
+				if (rok == -1)
 					return;
-				}
 			}
 
 			System.out.println("Podaj godzine rozpoczecia rezerwacji (5-22):");
@@ -94,10 +85,8 @@ public class Aplikacja {
 				System.out
 						.println("Niepoprawna godzina. Podaj jeszcze raz lub (-1) by wyjsc:");
 				godzinaS = in.nextInt();
-				if (godzinaS == -1) {
-					in.close();
+				if (godzinaS == -1)
 					return;
-				}
 			}
 
 			System.out.println("Podaj godzine zakonczenia rezerwacji (5-22):");
@@ -106,10 +95,8 @@ public class Aplikacja {
 				System.out
 						.println("Niepoprawna godzina. Podaj jeszcze raz lub (-1) by wyjsc:");
 				godzinaK = in.nextInt();
-				if (godzinaK == -1) {
-					in.close();
+				if (godzinaK == -1)
 					return;
-				}
 			}
 
 			if (!ListaRezerwacji.sprawdzDostepnosc(sala, godzinaS, godzinaK,
@@ -125,7 +112,6 @@ public class Aplikacja {
 			}
 			// end-user-code
 		}// while
-		in.close();
 	}
 
 	/**
@@ -141,11 +127,10 @@ public class Aplikacja {
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
 	 */
-	public void anulujRezerwacje(Wykladowca wykladowca) {
+	public void anulujRezerwacje(Wykladowca wykladowca, Scanner in) {
 		// begin-user-code
 		ListaRezerwacji.pokazRezerwacje(wykladowca);
 		System.out.println("Prosze wpisac numer rezerwacji do anulowania:");
-		Scanner in = new Scanner(System.in);
 		int numer = in.nextInt();
 		Rezerwacja rez = ListaRezerwacji.znajdzRezerwacje(numer);
 
@@ -153,15 +138,11 @@ public class Aplikacja {
 			System.out
 					.println("Bledny numer rezerwacji. Wpisz jeszcze raz lub (-1) by wyjsc:");
 			numer = in.nextInt();
-			if (numer == -1) {
-				in.close();
+			if (numer == -1)
 				return;
-			}
 			rez = ListaRezerwacji.znajdzRezerwacje(numer);
 		}
 		ListaRezerwacji.anulujRezerwacje(numer);
-
-		in.close();
 		// end-user-code
 	}
 
@@ -169,11 +150,10 @@ public class Aplikacja {
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
 	 */
-	public void zatwierdzRezerwacje(Wykladowca wykladowca) {
+	public void zatwierdzRezerwacje(Wykladowca wykladowca, Scanner in) {
 		// begin-user-code
 		ListaRezerwacji.pokazRezerwacje(wykladowca);
 		System.out.println("Prosze wpisac numer rezerwacji do zatwierdzenia:");
-		Scanner in = new Scanner(System.in);
 		int numer = in.nextInt();
 		Rezerwacja rez = ListaRezerwacji.znajdzRezerwacje(numer);
 
@@ -181,17 +161,13 @@ public class Aplikacja {
 			System.out
 					.println("Bledny numer rezerwacji. Wpisz jeszcze raz lub (-1) by wyjsc:");
 			numer = in.nextInt();
-			if (numer == -1) {
-				in.close();
+			if (numer == -1)
 				return;
-			}
 			rez = ListaRezerwacji.znajdzRezerwacje(numer);
 		}
 		ListaRezerwacji.zatwierdzRezerwacje(numer);
 		System.out.println("Rezerwacja numer " + numer
 				+ " zostala zatwierdzona.");
-
-		in.close();
 		// end-user-code
 	}
 
@@ -199,10 +175,9 @@ public class Aplikacja {
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
 	 */
-	public void zlozUwage(Wykladowca wykladowca) {
+	public void zlozUwage(Wykladowca wykladowca, Scanner in) {
 		// begin-user-code
 		System.out.println("Skladanie uwagi");
-		Scanner in = new Scanner(System.in);
 		System.out.println("Podaj numer sali, ktorej dotyczy uwaga:");
 		int numer = in.nextInt();
 		Sala sala = ListaSal.znajdzSale(numer);
@@ -211,13 +186,15 @@ public class Aplikacja {
 			System.out
 					.println("Niepoprawny numer sali. Wprowadz jeszcze raz lub (-1) by wyjsc");
 			numer = in.nextInt();
-			if (numer == -1) {
-				in.close();
+			if (numer == -1)
 				return;
-			}
 			sala = ListaSal.znajdzSale(numer);
 		}
-		in.close();
+		System.out.println("Podaj opis uwagi:");
+		in.nextLine();
+		String opis = in.nextLine();
+		ListaUwag.zlozUwage(wykladowca, sala, opis);
+		System.out.println("Zlozono uwage");
 		// end-user-code
 	}
 
@@ -235,11 +212,10 @@ public class Aplikacja {
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 * 
 	 */
-	public void zatwierdzUwage(Sala sala) {
+	public void zatwierdzUwage(Sala sala, Scanner in) {
 		// begin-user-code
 		ListaUwag.pokazUwagi(sala);
 		System.out.println("Prosze wpisac numer uwagi do zatwierdzenia:");
-		Scanner in = new Scanner(System.in);
 		int numer = in.nextInt();
 		Uwaga u = ListaUwag.znajdzUwage(numer);
 
@@ -247,16 +223,12 @@ public class Aplikacja {
 			System.out
 					.println("Bledny numer uwagi. Wpisz jeszcze raz lub (-1) by wyjsc:");
 			numer = in.nextInt();
-			if (numer == -1) {
-				in.close();
+			if (numer == -1)
 				return;
-			}
 			u = ListaUwag.znajdzUwage(numer);
 		}
 		ListaUwag.zatwierdzUwage(numer);
 		System.out.println("Uwaga numer " + numer + " zostala zatwierdzona.");
-
-		in.close();
 		// end-user-code
 	}
 
@@ -273,6 +245,10 @@ public class Aplikacja {
 		PaniZDziekanatu pani = null;
 		Sala sala = null;
 		ListaSal ls = new ListaSal("data/sale.txt");
+		ListaWykladowcow lw = new ListaWykladowcow("data/wykladowcy.txt");
+		ListaPanZDziekanatu lpzd = new ListaPanZDziekanatu("data/panieZDziekanatu.txt");
+		ListaRezerwacji lr = new ListaRezerwacji("data/rezerwacje.txt");
+		ListaUwag lu = new ListaUwag("data/uwagi.txt");
 
 		do {
 			System.out.println("Kim jestes?");
@@ -304,6 +280,7 @@ public class Aplikacja {
 					continue;
 				aplikacja.setUzytkownik(wykladowca);
 				do{
+					System.out.println("Witaj, " + wykladowca.getImie() + " " + wykladowca.getNazwisko() + "!");
 					System.out.println("Co chcesz zrobic?");
 					System.out.println("[0] Dodaj rezerwacje\n" +
 									"[1] Anuluj rezerwacje\n" + 
@@ -311,22 +288,24 @@ public class Aplikacja {
 									"[3] Zloz uwage\n" +
 									"[4] Wyloguj");
 					opcja = in.nextInt();
-					System.out.print("\033[H\033]2J");
+					
 					
 					switch(opcja){
 					case 0:
-						aplikacja.zlozRezerwacje(wykladowca);
+						aplikacja.zlozRezerwacje(wykladowca, in);
 						break;
 					case 1:
-						aplikacja.anulujRezerwacje(wykladowca);
+						aplikacja.anulujRezerwacje(wykladowca, in);
 						break;
 					case 2:
 						aplikacja.pokazRezerwacje(wykladowca);
 						break;
 					case 3:
-						aplikacja.zlozUwage(wykladowca);
+						aplikacja.zlozUwage(wykladowca, in);
 						break;
 					case 4:
+						System.out.println("Wylogowano");
+						uprawnienia = -1;
 						opcja = -1;
 						break;
 					default:
@@ -358,7 +337,6 @@ public class Aplikacja {
 									"[5] Zatwierdz uwage\n" +
 									"[6] Wyloguj");
 					opcja = in.nextInt();
-					System.out.print("\033[H\033]2J");
 					
 					if(opcja >=0 && opcja <= 3){
 						if(opcja == 0)
@@ -378,10 +356,8 @@ public class Aplikacja {
 									break;
 								wykladowca = ListaWykladowcow.znajdzWykladowce(id);
 							}
-							if(id == -1){
-								System.out.print("\033[H\033]2J");
+							if(id == -1)
 								continue;
-							}
 						}
 					}
 					
@@ -399,33 +375,33 @@ public class Aplikacja {
 									break;
 								sala = ListaSal.znajdzSale(id);
 							}
-							if(id == -1){
-								System.out.print("\033[H\033]2J");
+							if(id == -1)
 								continue;
-							}
 						}
 					}
 					
 					switch(opcja){
 					case 0:
-						aplikacja.zlozRezerwacje(wykladowca);
+						aplikacja.zlozRezerwacje(wykladowca, in);
 						break;
 					case 1:
-						aplikacja.anulujRezerwacje(wykladowca);
+						aplikacja.anulujRezerwacje(wykladowca, in);
 						break;
 					case 2:
 						aplikacja.pokazRezerwacje(wykladowca);
 						break;
 					case 3:
-						aplikacja.zatwierdzRezerwacje(wykladowca);
+						aplikacja.zatwierdzRezerwacje(wykladowca, in);
 						break;
 					case 4:
 						aplikacja.pokazUwagi(sala);
 						break;
 					case 5:
-						aplikacja.zatwierdzUwage(sala);
+						aplikacja.zatwierdzUwage(sala, in);
 						break;
 					case 6:
+						System.out.println("Wylogowano");
+						uprawnienia = -1;
 						opcja = -1;
 						break;
 					default:

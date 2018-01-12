@@ -42,6 +42,7 @@ public class ListaPanZDziekanatu {
 	 * @param filename
 	 */
 	public ListaPanZDziekanatu(String filename){
+		listaPanZDziekanatu = new LinkedList<PaniZDziekanatu>();
 		try {
 			Scanner in = new Scanner(new FileReader(filename));
 			while(in.hasNext()){

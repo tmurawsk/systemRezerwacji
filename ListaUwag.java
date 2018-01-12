@@ -66,6 +66,7 @@ public class ListaUwag {
 	 * @param filename
 	 */
 	public ListaUwag(String filename){
+		listaUwag = new LinkedList<Uwaga>();
 		try {
 			Scanner in = new Scanner(new FileReader(filename));
 			int newGenNr = 0;
@@ -113,15 +114,15 @@ public class ListaUwag {
 		System.out.println("Numer\tSala\tStatus\tWykladowca\t\tOpis");
 		for (Uwaga u : listaUwag) {
 			if (sala == null)
-				System.out.println(u.getNumer() + " " + u.getSala().getNumer()
-						+ " " + u.getStatus() + " "
+				System.out.println(u.getNumer() + "\t" + u.getSala().getNumer()
+						+ "\t" + u.getStatus() + "\t"
 						+ u.getWykladowca().getImie() + " "
-						+ u.getWykladowca().getNazwisko() + " " + u.getOpis());
+						+ u.getWykladowca().getNazwisko() + "\t" + u.getOpis());
 			else if (u.getSala().equals(sala))
-				System.out.println(u.getNumer() + " " + u.getSala().getNumer()
-						+ " " + u.getStatus() + " "
+				System.out.println(u.getNumer() + "\t" + u.getSala().getNumer()
+						+ "\t" + u.getStatus() + "\t"
 						+ u.getWykladowca().getImie() + " "
-						+ u.getWykladowca().getNazwisko() + " " + u.getOpis());
+						+ u.getWykladowca().getNazwisko() + "\t" + u.getOpis());
 		}
 		// end-user-code
 	}

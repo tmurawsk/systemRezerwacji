@@ -2,8 +2,8 @@
  * 
  */
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -41,8 +41,9 @@ public class ListaSal {
 	 * @param filename
 	 */
 	public ListaSal(String filename){
+		ListaSal.listaSal = new LinkedList<Sala>();
 		try {
-			Scanner in = new Scanner(new FileReader(filename));
+			Scanner in = new Scanner(new File(filename));
 			while(in.hasNext()){
 				Sala sala = new Sala();
 				sala.setNumer(in.nextInt());
