@@ -2,7 +2,10 @@
  * 
  */
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * <!-- begin-UML-doc --> <!-- end-UML-doc -->
@@ -57,6 +60,32 @@ public class ListaUwag {
 		// begin-user-code
 		ListaUwag.listaUwag = listaUwag;
 		// end-user-code
+	}
+	
+	/**
+	 * @param filename
+	 */
+	public ListaUwag(String filename){
+		try {
+			Scanner in = new Scanner(new FileReader(filename));
+			int newGenNr = 0;
+			while(in.hasNext()){
+				Uwaga u = new Uwaga();
+				newGenNr = in.nextInt();
+				u.setNumer(newGenNr);
+				u.setStatus(in.nextInt());
+				u.setSala(ListaSal.znajdzSale(in.nextInt()));
+				u.setWykladowca(ListaWykladowcow.znajdzWykladowce(in.nextInt()));
+				u.setOpis(in.nextLine());
+				
+				listaUwag.add(u);
+			}
+			ListaUwag.genNr = newGenNr;
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("NIE ZNALEZIONO PLIKU " + filename);
+			e.printStackTrace();
+		}
 	}
 
 	/**

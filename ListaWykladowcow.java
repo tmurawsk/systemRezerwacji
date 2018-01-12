@@ -2,7 +2,10 @@
  * 
  */
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /** 
  * <!-- begin-UML-doc -->
@@ -34,16 +37,50 @@ public class ListaWykladowcow {
 		ListaWykladowcow.listaWykladowcow = listaWykladowcow;
 		// end-user-code
 	}
+	
+	/**
+	 * @param filename
+	 */
+	public ListaWykladowcow(String filename){
+		try {
+			Scanner in = new Scanner(new FileReader(filename));
+			while(in.hasNext()){
+				Wykladowca w = new Wykladowca();
+				w.setIdentyfikator(in.nextInt());
+				w.setUprawnienia(0);
+				String s = in.nextLine();
+				String imie = "", nazwisko = "";
+				imie += s.charAt(0);
+				boolean czyNazwisko = false;
+				
+				for(int i = 1; i < s.length(); i++){
+					if(s.charAt(i) < 'Z')
+						czyNazwisko = true;
+					if(czyNazwisko)
+						nazwisko += s.charAt(i);
+					else
+						imie += s.charAt(i);
+				}
+				
+				w.setImie(imie);
+				w.setNazwisko(nazwisko);
+				listaWykladowcow.add(w);
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("NIE ZNALEZIONO PLIKU " + filename);
+			e.printStackTrace();
+		}
+	}
 
 	/** 
 	 * <!-- begin-UML-doc -->
 	 * <!-- end-UML-doc -->
 	 */
-	public static Wykladowca znajdzWykladowce(int id, String nazwisko, String imie) {
+	public static Wykladowca znajdzWykladowce(int id) {
 		// begin-user-code
 		for (Wykladowca w : listaWykladowcow)
-			if (w.getIdentyfikator() == id && w.getImie() == imie
-					&& w.getNazwisko() == nazwisko)
+			if (w.getIdentyfikator() == id)
 				return w;
 		return null;
 

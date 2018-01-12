@@ -2,7 +2,10 @@
  * 
  */
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /** 
  * <!-- begin-UML-doc -->
@@ -33,6 +36,26 @@ public class ListaPanZDziekanatu {
 		// begin-user-code
 		ListaPanZDziekanatu.listaPanZDziekanatu = listaPanZDziekanatu;
 		// end-user-code
+	}
+	
+	/**
+	 * @param filename
+	 */
+	public ListaPanZDziekanatu(String filename){
+		try {
+			Scanner in = new Scanner(new FileReader(filename));
+			while(in.hasNext()){
+				PaniZDziekanatu pani = new PaniZDziekanatu();
+				pani.setIdentyfikator(in.nextInt());
+				pani.setUprawnienia(1);
+				
+				listaPanZDziekanatu.add(pani);
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("NIE ZNALEZIONO PLIKU " + filename);
+			e.printStackTrace();
+		}
 	}
 
 	/** 

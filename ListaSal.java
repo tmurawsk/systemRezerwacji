@@ -2,7 +2,10 @@
  * 
  */
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /** 
  * <!-- begin-UML-doc -->
@@ -32,6 +35,25 @@ public class ListaSal {
 		// begin-user-code
 		ListaSal.listaSal = listaSal;
 		// end-user-code
+	}
+	
+	/**
+	 * @param filename
+	 */
+	public ListaSal(String filename){
+		try {
+			Scanner in = new Scanner(new FileReader(filename));
+			while(in.hasNext()){
+				Sala sala = new Sala();
+				sala.setNumer(in.nextInt());
+				
+				listaSal.add(sala);
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("NIE ZNALEZIONO PLIKU " + filename);
+			e.printStackTrace();
+		}
 	}
 
 	/** 

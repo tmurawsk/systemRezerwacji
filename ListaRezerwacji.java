@@ -2,7 +2,10 @@
  * 
  */
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /** 
  * <!-- begin-UML-doc -->
@@ -59,6 +62,35 @@ public class ListaRezerwacji {
 		// begin-user-code
 		ListaRezerwacji.listaRezerwacji = listaRezerwacji;
 		// end-user-code
+	}
+	
+	/**
+	 * @param filename
+	 */
+	public ListaRezerwacji(String filename){
+		try {
+			Scanner in = new Scanner(new FileReader(filename));
+			int newGenNr = 0;
+			while(in.hasNext()){
+				Rezerwacja rez = new Rezerwacja();
+				newGenNr = in.nextInt();
+				rez.setNumer(newGenNr);
+				rez.setDzien(in.nextInt());
+				rez.setMiesiac(in.nextInt());
+				rez.setRok(in.nextInt());
+				rez.setGodzinaStart(in.nextInt());
+				rez.setGodzinaKoniec(in.nextInt());
+				rez.setStatus(in.nextInt());
+				rez.setSala(ListaSal.znajdzSale(in.nextInt()));
+				rez.setWykladowca(ListaWykladowcow.znajdzWykladowce(in.nextInt()));
+				listaRezerwacji.add(rez);
+			}
+			ListaRezerwacji.genNr = newGenNr;
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("NIE ZNALEZIONO PLIKU " + filename);
+			e.printStackTrace();
+		}
 	}
 
 	/** 
