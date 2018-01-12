@@ -4,6 +4,8 @@
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -61,16 +63,16 @@ public class ListaUwag {
 		ListaUwag.listaUwag = listaUwag;
 		// end-user-code
 	}
-	
+
 	/**
 	 * @param filename
 	 */
-	public ListaUwag(String filename){
+	public ListaUwag(String filename) {
 		listaUwag = new LinkedList<Uwaga>();
 		try {
 			Scanner in = new Scanner(new FileReader(filename));
 			int newGenNr = 0;
-			while(in.hasNext()){
+			while (in.hasNext()) {
 				Uwaga u = new Uwaga();
 				newGenNr = in.nextInt();
 				u.setNumer(newGenNr);
@@ -78,7 +80,7 @@ public class ListaUwag {
 				u.setSala(ListaSal.znajdzSale(in.nextInt()));
 				u.setWykladowca(ListaWykladowcow.znajdzWykladowce(in.nextInt()));
 				u.setOpis(in.nextLine());
-				
+
 				listaUwag.add(u);
 			}
 			ListaUwag.genNr = newGenNr;
@@ -146,6 +148,31 @@ public class ListaUwag {
 			if (u.getNumer() == numer)
 				return u;
 		return null;
+		// end-user-code
+	}
+
+	/**
+	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
+	 */
+	public static void zapiszUwagi(String filename) {
+		// begin-user-code
+		try {
+			PrintWriter writer = new PrintWriter(filename, "UTF-8");
+
+			for (Uwaga u : listaUwag)
+				writer.println(u.getNumer() + " " + u.getStatus() + " "
+						+ u.getSala().getNumer() + " "
+						+ u.getWykladowca().getIdentyfikator() + " "
+						+ u.getOpis());
+
+			writer.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("NIE ZNALEZIONO PLIKU " + filename);
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("NIEWSPIERANE KODOWANIE PLIKU " + filename);
+			e.printStackTrace();
+		}
 		// end-user-code
 	}
 }

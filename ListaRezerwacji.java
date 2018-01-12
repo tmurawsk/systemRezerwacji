@@ -4,6 +4,8 @@
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -126,19 +128,20 @@ public class ListaRezerwacji {
 	 */
 	public static void pokazRezerwacje(Wykladowca wykladowca) {
 		// begin-user-code
-		System.out
-				.println("Numer\tSala\tWykladowca\tGodzina\tStatus\tData");
+		System.out.println("Numer\tSala\tWykladowca\tGodzina\tStatus\tData");
 		if (!listaRezerwacji.isEmpty())
 			for (Rezerwacja r : listaRezerwacji) {
 				if (wykladowca == null)
-					System.out.println(r.getNumer() + "\t" + r.getSala().getNumer() + "\t"
+					System.out.println(r.getNumer() + "\t"
+							+ r.getSala().getNumer() + "\t"
 							+ r.getWykladowca().getImie() + " "
 							+ r.getWykladowca().getNazwisko() + "\t"
 							+ r.getGodzinaStart() + "-" + r.getGodzinaKoniec()
 							+ "\t" + r.getStatus() + "\t" + r.getDzien() + "."
 							+ r.getMiesiac() + "." + r.getRok());
-				else if (r.getWykladowca().equals(r.getWykladowca()))
-					System.out.println(r.getNumer() + "\t" + r.getSala().getNumer() + "\t"
+				else if (r.getWykladowca().equals(wykladowca))
+					System.out.println(r.getNumer() + "\t"
+							+ r.getSala().getNumer() + "\t"
 							+ r.getWykladowca().getImie() + " "
 							+ r.getWykladowca().getNazwisko() + "\t"
 							+ r.getGodzinaStart() + "-" + r.getGodzinaKoniec()
@@ -201,6 +204,32 @@ public class ListaRezerwacji {
 			if (r.getNumer() == numer)
 				return r;
 		return null;
+		// end-user-code
+	}
+
+	/**
+	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
+	 */
+	public static void zapiszRezerwacje(String filename) {
+		// begin-user-code
+		try {
+			PrintWriter writer = new PrintWriter(filename, "UTF-8");
+
+			for (Rezerwacja r : listaRezerwacji)
+				writer.println(r.getNumer() + " " + r.getDzien() + " "
+						+ r.getMiesiac() + " " + r.getRok() + " "
+						+ r.getGodzinaStart() + " " + r.getGodzinaKoniec()
+						+ " " + r.getStatus() + " " + r.getSala().getNumer()
+						+ " " + r.getWykladowca().getIdentyfikator());
+
+			writer.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("NIE ZNALEZIONO PLIKU " + filename);
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("NIEWSPIERANE KODOWANIE PLIKU " + filename);
+			e.printStackTrace();
+		}
 		// end-user-code
 	}
 }

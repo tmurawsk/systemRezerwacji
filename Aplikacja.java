@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 /**
@@ -251,6 +254,9 @@ public class Aplikacja {
 		ListaUwag lu = new ListaUwag("data/uwagi.txt");
 
 		do {
+			wykladowca = null;
+			pani = null;
+			sala = null;
 			System.out.println("Kim jestes?");
 			System.out.println("[0] Wykladowca\n[1] Pani z Dziekanatu\n[2] Wyjscie");
 			uprawnienia = in.nextInt();
@@ -411,6 +417,9 @@ public class Aplikacja {
 				}while(opcja != -1);
 			}
 		} while (uprawnienia != 0 && uprawnienia != 1);
+		
+		ListaRezerwacji.zapiszRezerwacje("data/rezerwacje.txt");
+		ListaUwag.zapiszUwagi("data/uwagi.txt");
 
 		in.close();
 	}
