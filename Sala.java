@@ -35,31 +35,4 @@ public class Sala {
 		this.numer = numer;
 		// end-user-code
 	}
-	
-	/** 
-	 * <!-- begin-UML-doc -->
-	 * <!-- end-UML-doc -->
-	 * @generated "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	private Sala sala;
-
-	/** 
-	 * @return the sala
-	 * @generated "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public Sala getSala() {
-		// begin-user-code
-		return sala;
-		// end-user-code
-	}
-
-	/** 
-	 * @param numer the sala to set
-	 * @generated "UML to Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
-	 */
-	public void setSala(Sala sala) {
-		// begin-user-code
-		this.sala = sala;
-		// end-user-code
-	}
 }
