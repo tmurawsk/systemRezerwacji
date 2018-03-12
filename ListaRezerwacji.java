@@ -123,7 +123,6 @@ public class ListaRezerwacji {
 		// end-user-code
 	}
 
-
 	/**
 	 * <!-- begin-UML-doc --> <!-- end-UML-doc -->
 	 */
